@@ -40,6 +40,7 @@ input.oninput = function () {
   this.value = this.value.toUpperCase();
   result.querySelector(".ans").textContent = "--";
   err.style.display = "none";
+  refreshButton.style.display = "none";
   if (!this.value) {
     swapButton.style.display = "block";
     equalButton.style.display = "none";
