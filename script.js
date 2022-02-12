@@ -44,9 +44,11 @@ input.oninput = function () {
   if (!this.value) {
     swapButton.style.display = "block";
     equalButton.style.display = "none";
+    refreshButton.style.display = "none";
   } else {
     swapButton.style.display = "none";
     equalButton.style.display = "block";
+    refreshButton.style.display = "none";
   }
 };
 equalButton.onclick = function () {
