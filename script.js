@@ -81,6 +81,7 @@ equalButton.onclick = function () {
       if (enteredRoman.startsWith(num[1])) {
         if (
           enteredRoman.match(num[1]).length > 1 &&
+          enteredRoman.match(num[1]).length < 5 &&
           (num[0] != 10 || num[0] != 100 || num[0] != 1000)
         ) {
           err.style.display = "initial";
