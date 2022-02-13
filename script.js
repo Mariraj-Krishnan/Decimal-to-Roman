@@ -27,11 +27,11 @@ const numbers = [
 swapButton.onclick = () => {
   input.value = "";
   if (!swapped) {
-    input.placeholder = "Enter the decimal number";
+    input.placeholder = "Enter decimal number";
     result.querySelector("span").textContent = "Roman:";
     swapped = true;
   } else {
-    input.placeholder = "Enter the roman number";
+    input.placeholder = "Enter roman number";
     result.querySelector("span").textContent = "Decimal:";
     swapped = false;
   }
