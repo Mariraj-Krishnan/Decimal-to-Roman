@@ -27,11 +27,11 @@ const numbers = [
 swapButton.onclick = () => {
   input.value = "";
   if (!swapped) {
-    input.placeholder = "Enter decimal number";
+    input.placeholder = "Enter the decimal number";
     result.querySelector("span").textContent = "Roman:";
     swapped = true;
   } else {
-    input.placeholder = "Enter roman number";
+    input.placeholder = "Enter the roman number";
     result.querySelector("span").textContent = "Decimal:";
     swapped = false;
   }
@@ -44,11 +44,9 @@ input.oninput = function () {
   if (!this.value) {
     swapButton.style.display = "block";
     equalButton.style.display = "none";
-    refreshButton.style.display = "none";
   } else {
     swapButton.style.display = "none";
     equalButton.style.display = "block";
-    refreshButton.style.display = "none";
   }
 };
 equalButton.onclick = function () {
@@ -78,11 +76,18 @@ equalButton.onclick = function () {
     numbers.forEach((num) => {
       let times = 0;
       if (!enteredRoman) return;
+      const regEx = new RegExp(num[1], "g");
+      const regExpRepeat = new RegExp(
+        `${num[1]}${num[1]}${num[1]}${num[1]}`,
+        "g"
+      );
       if (enteredRoman.startsWith(num[1])) {
         if (
-          (enteredRoman.match(num[1]).length > 1 &&
-          !enteredRoman.match(num[1]).length > 3)&&
-          (num[0] != 10 || num[0] != 100 || num[0] != 1000)
+          enteredRoman.match(regExpRepeat) ||
+          (enteredRoman.match(regEx).length > 1 &&
+            num[0] != 10 &&
+            num[0] != 100 &&
+            num[0] != 1000)
         ) {
           err.style.display = "initial";
           return;
