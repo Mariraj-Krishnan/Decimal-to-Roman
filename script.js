@@ -85,6 +85,7 @@ equalButton.onclick = function () {
         if (
           enteredRoman.match(regExpRepeat) ||
           (enteredRoman.match(regEx).length > 1 &&
+            num[0] != 1 &&
             num[0] != 10 &&
             num[0] != 100 &&
             num[0] != 1000)
