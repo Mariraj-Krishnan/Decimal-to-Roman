@@ -81,7 +81,6 @@ equalButton.onclick = function () {
         `${num[1]}${num[1]}${num[1]}${num[1]}`,
         "g"
       );
-      if (enteredRoman.startsWith(num[1])) {
         if (
           enteredRoman.match(regExpRepeat) ||
           (enteredRoman.match(regEx).length > 1 &&
@@ -93,6 +92,7 @@ equalButton.onclick = function () {
           err.style.display = "initial";
           return;
         }
+      if (enteredRoman.startsWith(num[1])) {
         do {
           times++;
           computed.push(num[0]);
