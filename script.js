@@ -1,10 +1,10 @@
-const swapButton = document.querySelector(".swap-button");
-const input = document.querySelector(".input");
-const equalButton = document.querySelector(".equal-button");
-const result = document.querySelector(".result");
-const container = document.querySelector(".container");
-const err = document.querySelector(".err");
-const refreshButton = document.querySelector(".refresh-button");
+const swapButton = document.querySelector(".swap-button"),
+      input = document.querySelector(".input"),
+      equalButton = document.querySelector(".equal-button"),
+      result = document.querySelector(".result"),
+      container = document.querySelector(".container"),
+      err = document.querySelector(".err"),
+      refreshButton = document.querySelector(".refresh-button");
 let swapped = false;
 input.value = "";
 const numbers = [
@@ -20,18 +20,16 @@ const numbers = [
   [9, "IX"],
   [5, "V"],
   [4, "IV"],
-  [3, "III"],
-  [2, "II"],
   [1, "I"],
 ];
 swapButton.onclick = () => {
   input.value = "";
   if (!swapped) {
-    input.placeholder = "Enter decimal number";
+    input.placeholder = "Enter the decimal number";
     result.querySelector("span").textContent = "Roman:";
     swapped = true;
   } else {
-    input.placeholder = "Enter roman number";
+    input.placeholder = "Enter the roman number";
     result.querySelector("span").textContent = "Decimal:";
     swapped = false;
   }
@@ -70,17 +68,18 @@ equalButton.onclick = function () {
   }
   //roman to decimal
   if (!swapped) {
-    let enteredRoman = input.value.replace(/ /g, "");
-    let computed = [];
-    let repeatedTimes = [];
+    let enteredRoman = input.value.replace(/ /g, ""),
+        computed = [],
+        repeatedTimes = [];
+    if (!enteredRoman) return;
     numbers.forEach((num) => {
       let times = 0;
-      if (!enteredRoman) return;
-      const regEx = new RegExp(num[1], "g");
-      const regExpRepeat = new RegExp(
+      const regEx = new RegExp(num[1], "g"),
+            regExpRepeat = new RegExp(
         `${num[1]}${num[1]}${num[1]}${num[1]}`,
         "g"
       );
+      if (enteredRoman.startsWith(num[1])) {
         if (
           enteredRoman.match(regExpRepeat) ||
           (enteredRoman.match(regEx).length > 1 &&
@@ -92,7 +91,6 @@ equalButton.onclick = function () {
           err.style.display = "initial";
           return;
         }
-      if (enteredRoman.startsWith(num[1])) {
         do {
           times++;
           computed.push(num[0]);
