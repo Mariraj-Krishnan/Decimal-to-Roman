@@ -52,6 +52,7 @@ equalButton.onclick = function () {
   //decimal to roman
   if (swapped) {
     let enteredNumber = parseInt(input.value);
+    If(enteredNumber > 1000) return;
     let found = "";
     numbers.forEach((num) => {
       if (!enteredNumber) return;
