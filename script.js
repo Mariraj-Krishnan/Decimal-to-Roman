@@ -1,10 +1,10 @@
-const swapButton = document.querySelector(".swap-button"),
-      input = document.querySelector(".input"),
-      equalButton = document.querySelector(".equal-button"),
-      result = document.querySelector(".result"),
-      container = document.querySelector(".container"),
-      err = document.querySelector(".err"),
-      refreshButton = document.querySelector(".refresh-button");
+const swapButton = document.querySelector(".swap-button");
+const input = document.querySelector(".input");
+const equalButton = document.querySelector(".equal-button");
+const result = document.querySelector(".result");
+const container = document.querySelector(".container");
+const err = document.querySelector(".err");
+const refreshButton = document.querySelector(".refresh-button");
 let swapped = false;
 input.value = "";
 const numbers = [
@@ -52,7 +52,6 @@ equalButton.onclick = function () {
   //decimal to roman
   if (swapped) {
     let enteredNumber = parseInt(input.value);
-    If(enteredNumber > 1000) return;
     let found = "";
     numbers.forEach((num) => {
       if (!enteredNumber) return;
@@ -69,14 +68,14 @@ equalButton.onclick = function () {
   }
   //roman to decimal
   if (!swapped) {
-    let enteredRoman = input.value.replace(/ /g, ""),
-        computed = [],
-        repeatedTimes = [];
+    let enteredRoman = input.value.replace(/ /g, "");
+    let computed = [];
+    let repeatedTimes = [];
     if (!enteredRoman) return;
     numbers.forEach((num) => {
       let times = 0;
-      const regEx = new RegExp(num[1], "g"),
-            regExpRepeat = new RegExp(
+      const regEx = new RegExp(num[1], "g");
+      const regExpRepeat = new RegExp(
         `${num[1]}${num[1]}${num[1]}${num[1]}`,
         "g"
       );
