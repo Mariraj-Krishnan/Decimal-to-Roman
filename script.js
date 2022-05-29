@@ -7,7 +7,16 @@ const err = document.querySelector(".err");
 const refreshButton = document.querySelector(".refresh-button");
 let swapped = false;
 input.value = "";
-const numbers = [
+const romanToIntRef = {
+  I: 1,
+  V: 5,
+  X: 10,
+  L: 50,
+  C: 100,
+  D: 500,
+  M: 1000,
+};
+const intToRomanRef = [
   [1000, "M"],
   [900, "CM"],
   [500, "D"],
@@ -34,6 +43,7 @@ swapButton.onclick = () => {
     swapped = false;
   }
 };
+
 input.oninput = function () {
   this.value = this.value.toUpperCase();
   result.querySelector(".ans").textContent = "--";
@@ -47,21 +57,13 @@ input.oninput = function () {
     equalButton.style.display = "block";
   }
 };
+
 equalButton.onclick = function () {
   if (!input.value) return;
   //decimal to roman
   if (swapped) {
     let enteredNumber = parseInt(input.value);
-    let found = "";
-    numbers.forEach((num) => {
-      if (!enteredNumber) return;
-      do {
-        if (Math.floor(enteredNumber / num[0]) > 0) {
-          enteredNumber -= num[0];
-          found += num[1];
-        }
-      } while (enteredNumber >= num[0]);
-    });
+    let found = intToRoman(enteredNumber);
     this.style.display = "none";
     refreshButton.style.display = "block";
     result.querySelector(".ans").textContent = found;
@@ -69,55 +71,64 @@ equalButton.onclick = function () {
   //roman to decimal
   if (!swapped) {
     let enteredRoman = input.value.replace(/ /g, "");
-    let computed = [];
-    let repeatedTimes = [];
     if (!enteredRoman) return;
-    numbers.forEach((num) => {
-      let times = 0;
-      const regEx = new RegExp(num[1], "g");
-      const regExpRepeat = new RegExp(
-        `${num[1]}${num[1]}${num[1]}${num[1]}`,
-        "g"
-      );
-      if (enteredRoman.startsWith(num[1])) {
-        if (
-          enteredRoman.match(regExpRepeat) ||
-          (enteredRoman.match(regEx).length > 1 &&
-            num[0] != 1 &&
-            num[0] != 10 &&
-            num[0] != 100 &&
-            num[0] != 1000)
-        ) {
-          err.style.display = "initial";
-          return;
-        }
-        do {
-          times++;
-          computed.push(num[0]);
-          enteredRoman = enteredRoman.replace(
-            enteredRoman.slice(0, num[1].length),
-            ""
-          );
-        } while (enteredRoman.startsWith(num[1]));
-        repeatedTimes.push(times);
-      }
-    });
-    if (enteredRoman) {
+
+    if (
+      enteredRoman.match(
+        /^M{0,3}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$/
+      ) == null
+    ) {
       err.style.display = "initial";
       return;
     }
-    let decimal = 0;
-    computed.forEach((num) => {
-      decimal += num;
-    });
+
+    let decimal = romanToInt(enteredRoman);
     this.style.display = "none";
     refreshButton.style.display = "block";
     result.querySelector(".ans").textContent = decimal;
   }
 };
+
 refreshButton.onclick = function () {
   input.value = "";
   result.querySelector(".ans").textContent = "--";
   this.style.display = "none";
   swapButton.style.display = "block";
+};
+
+var romanToInt = function (romanString) {
+  let result = 0;
+  for (let i = 0; i < romanString.length; i++) {
+    if (i < romanString.length - 1) {
+      if (
+        (romanString[i] == "I" &&
+          (romanString[i + 1] == "V" || romanString[i + 1] == "X")) ||
+        (romanString[i] == "X" &&
+          (romanString[i + 1] == "L" || romanString[i + 1] == "C")) ||
+        (romanString[i] == "C" &&
+          (romanString[i + 1] == "D" || romanString[i + 1] == "M"))
+      ) {
+        result +=
+          romanToIntRef[romanString[i + 1]] - romanToIntRef[romanString[i]];
+        i++;
+        continue;
+      }
+    }
+    result += romanToIntRef[romanString[i]];
+  }
+  return result;
+};
+
+var intToRoman = function (integerNum) {
+  let result = "";
+  while (integerNum > 0) {
+    for (let i = 0; i < intToRomanRef.length; i++) {
+      if (integerNum / intToRomanRef[i][0] >= 1) {
+        result += intToRomanRef[i][1];
+        integerNum -= intToRomanRef[i][0];
+        break;
+      }
+    }
+  }
+  return result;
 };
